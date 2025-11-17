@@ -4,11 +4,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import LottoTicket, LottoDraw
 import random
 
-# 홈 페이지
+# 홈 페이지 (사용자와 관리자 모두 사용)
 def home(request):
     return render(request, 'lotto_app/home.html')
 
-# 회원가입
+# 회원가입 페이지 (사용자만 사용)
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -20,14 +20,15 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'lotto_app/signup.html', {'form': form})
 
-# 로그인 (사용자/관리자 공용)
+# 로그인 (사용자와 관리자 모두 사용)
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # 관리자 계정이면 관리 페이지로 이동
+
+            # 관리자 계정으로 로그인한 경우 로또 추첨 페이지로 이동
             if user.is_superuser:
                 return redirect('lotto_draw')
             else:
@@ -36,12 +37,12 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'lotto_app/login.html', {'form': form})
 
-# 로그아웃
+# 로그아웃 페이지 (사용자와 관리자 모두 사용)
 def logout_view(request):
     logout(request)
     return render(request, 'lotto_app/logout.html')
 
-# 로또 구매 (사용자)
+# 로또 구매 페이지 (사용자만 사용)
 def buy_lotto(request):
     if request.method == 'POST':
         numbers = request.POST.get('numbers')
@@ -52,13 +53,13 @@ def buy_lotto(request):
         return redirect('check_lotto')
     return render(request, 'lotto_app/buy.html')
 
-# 당첨 확인 (사용자)
+# 당첨 조회 페이지 (사용자만 사용)
 def check_lotto(request):
     tickets = LottoTicket.objects.filter(user=request.user)
     draws = LottoDraw.objects.all()
     return render(request, 'lotto_app/check.html', {'tickets': tickets, 'draws': draws})
 
-# 관리자용 로또 추첨
+# 로또 추첨 페이지 (관리자만 사용)
 def lotto_draw(request):
     if request.method == 'POST':
         numbers = ','.join(map(str, random.sample(range(1, 46), 6)))
@@ -66,7 +67,7 @@ def lotto_draw(request):
         return redirect('admin_check')
     return render(request, 'lotto_app/lotto.html')
 
-# 관리자용 당첨자 조회
+# 당첨자 조회 페이지 (관리자만 사용)
 def admin_check(request):
     draws = LottoDraw.objects.all()
     tickets = LottoTicket.objects.all()

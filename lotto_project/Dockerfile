@@ -1,4 +1,4 @@
-# Python 3.10 이미지 사용
+# Python 이미지 사용
 FROM python:3.10-slim
 
 # 작업 디렉터리
