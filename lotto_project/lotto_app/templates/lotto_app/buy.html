@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로또 구매</title>
+</head>
+<body>
+    <h1>로또 구매</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input name="numbers" placeholder="1,2,3,4,5,6">
+        <label>자동 선택 <input type="checkbox" name="auto"></label>
+        <button>구매</button>
+    </form>
+    <a href="{% url 'home' %}">홈</a>
+</body>
+</html>

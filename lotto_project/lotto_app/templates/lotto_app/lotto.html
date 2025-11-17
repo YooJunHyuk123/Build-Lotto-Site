@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로또 추첨</title>
+</head>
+<body>
+    <h1>관리자: 로또 추첨</h1>
+    <form method="post">{% csrf_token %}
+        <button>추첨 실행</button>
+    </form>
+    <a href="{% url 'admin_check' %}">당첨자 조회</a>
+</body>
+</html>

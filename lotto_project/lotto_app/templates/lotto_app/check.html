@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>당첨 확인</title>
+</head>
+<body>
+    <h1>당첨 확인</h1>
+    <h2>내 티켓</h2>
+    <ul>
+        {% for t in tickets %}
+            <li>{{ t.numbers }} ({{ t.created_at }})</li>
+        {% empty %}
+            <li>티켓 없음</li>
+        {% endfor %}
+    </ul>
+    <h2>당첨 번호</h2>
+    <ul>
+        {% for d in draws %}
+            <li>{{ d.numbers }} ({{ d.draw_date }})</li>
+        {% empty %}
+            <li>추첨 없음</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">홈</a>
+</body>
+</html>

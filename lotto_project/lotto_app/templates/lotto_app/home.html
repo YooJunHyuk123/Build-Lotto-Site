@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>홈</title>
+</head>
+<body>
+    <h1>로또 웹사이트에 오신 것을 환영합니다!</h1>
+    {% if user.is_authenticated %}
+        <p>{{ user.username }}님 환영합니다. <a href="{% url 'logout' %}">로그아웃</a></p>
+        <ul>
+            <li><a href="{% url 'buy_lotto' %}">로또 구매</a></li>
+            <li><a href="{% url 'check_lotto' %}">당첨 조회</a></li>
+        </ul>
+    {% else %}
+        <p><a href="{% url 'login' %}">로그인</a> | <a href="{% url 'signup' %}">회원가입</a></p>
+    {% endif %}
+</body>
+</html>
